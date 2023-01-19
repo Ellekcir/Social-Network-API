@@ -84,7 +84,7 @@ User.findOneAndDelete({ _id: req.params.id })
   // POST http://localhost:3001/api/users/:userId/friends
   addFriend(req, res) {
     User.findOneAndUpdate(
-      { _id: req.params.userId },
+      { _id: req.params.id },
       req.body,
       { runValidators: true, new: true })
       .then(user => {
@@ -105,8 +105,9 @@ User.findOneAndDelete({ _id: req.params.id })
 // DELETE http://localhost:3001/api/users/:usersId/friends/:friendsId
 removeFriend(req, res) {
   User.findOneAndUpdate(
-    { _id: req.params.id,
-      $pull: { friends: req.params.friendsId }})
+    { _id: req.params.id},
+      {$pull: { friends: req.params.friendsId }},       
+      { new: true, runValidators: true })
   
       .then((usersFriend) =>
         !usersFriend

@@ -39,7 +39,7 @@ router.route('/:id/friends')
 
 // /api/users/:usersId/friendss/:friendId
 router.route('/:id/friends/:friendsId') 
-  .delete(removeFriend); // DELETE http://localhost:3001/api/users/:usersId/friends/:friendsId
+  .delete(removeFriend); // DELETE http://localhost:3001/api/users/:usersId/friends/:friendsId WORKING
 
 
 module.exports = router;
