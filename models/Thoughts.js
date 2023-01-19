@@ -1,4 +1,6 @@
 const { Schema, model, Types } = require('mongoose');
+const moment = require('moment');
+
 
 const reactionSchema = new Schema(
   {
@@ -36,11 +38,15 @@ const reactionSchema = new Schema(
   //     // Set default value to the current timestamp using moment
   //     type: Date,
   //     default: Date.now,
-  //     get: createdAtVal => moment(createdAtVal).format('MMM DD, YYYY [at] hh:mm a')
+  //     get: createdAt => moment(createdAt).format('MMM DD, YYYY [at] hh:mm a')
   //   }
   // },
 
-
+// {
+//     "thoughtText": "Here's where the thought body goes",
+//     "username": "peter",
+//     "userId": " "
+// }
 const thoughtSchema = new Schema(
   {
     thoughtText: {
@@ -75,7 +81,8 @@ const thoughtSchema = new Schema(
 );
 
 thoughtSchema.path('createdAt').get(function (createdAt){
-  return createdAt.toLocaleString();
+  // return createdAt.toLocaleString();
+  return moment(createdAt).format('MMM DD, YYYY [at] hh:mm a')
 })
 
 thoughtSchema.virtual("reactionCount").get(function () {
