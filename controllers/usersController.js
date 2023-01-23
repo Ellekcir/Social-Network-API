@@ -24,7 +24,7 @@ module.exports = {
     User.findOne({ _id: req.params.id })
       .select('-__v')
       .populate('friends')
-      // .populate('thoughts')
+      .populate('thoughts')
       .then((usersData) => {
 
         if (!usersData) {

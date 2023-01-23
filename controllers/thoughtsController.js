@@ -1,5 +1,5 @@
 // these are different ways to write fucntion using if statements - compare with userController
-const { Thoughts } = require('../models');
+const { Thoughts, User} = require('../models');
 
 module.exports = {
     //  getThoughts,
@@ -55,7 +55,7 @@ module.exports = {
             { _id: req.params.thoughtId },
             { $set: req.body },
             { runValidators: true, new: true }
-                .populate({ path: "reactions" })
+                .populate({ path: reactions })
         )
             .then((thoughts) =>
                 !thoughts
@@ -70,7 +70,7 @@ module.exports = {
     addReaction(req, res) {
         Thoughts.findOneAndUpdate(
             { _id: req.params.thoughtId },
-            { $push: { reactions: body } },
+            { $push: { reactions: req.body } },
             { new: true, runValidators: true }
         )
             .populate({ path: "reactions" })
@@ -89,8 +89,8 @@ module.exports = {
 
     removeReaction(req, res) {
         Thoughts.findOneAndUpdate(
-            { _id: params.thoughtId },
-            { $pull: { reactions: { reactionId: params.reactionId } } },
+            { _id: req.params.thoughtId },
+            { $pull: { reactions: req.body } },
             { new: true }
         )
             .then((thoughtsData) => {
