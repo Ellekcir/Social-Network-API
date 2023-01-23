@@ -55,7 +55,7 @@ module.exports = {
             { _id: req.params.thoughtId },
             { $set: req.body },
             { runValidators: true, new: true }
-                .populate({ path: reactions })
+                // .populate({ path: objectId.reactions })
         )
             .then((thoughts) =>
                 !thoughts

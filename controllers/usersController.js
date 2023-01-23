@@ -97,28 +97,30 @@ User.findOneAndDelete({ _id: req.params.id })
       res.json({
         message: "Friend added to the user"
       })
-      .catch(err => res.status(400).json(err))
+      .catch((err) => res.status(400).json(err));
 
   },
 
 // removeFriend,
 // DELETE http://localhost:3001/api/users/:usersId/friends/:friendsId
 removeFriend(req, res) {
-  User.findOneAndUpdate(
+  User.findByIdAndUpdate(
     { _id: req.params.id},
-      {$pull: { friends: req.params.friendsId }},       
+      {$pull: { friends: req.params.friendsId }, },       
       { new: true, runValidators: true })
   
-      .then((usersFriend) =>
-        !usersFriend
-          ? res
-              .status(404)
-              .json({ message: 'No friend found with that ID' })
-          : res.json(usersFriend)
-      )
-      .catch((err) => res.status(500).json(err));
+      .then((usersFriend) => {
+        if (!usersFriend) {
+          res.status(404).json({ message: "No friend found with this id!" });
+          return;
+        }
+        res.json(usersFriend);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
   },
-
 
 
 };
